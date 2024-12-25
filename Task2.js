@@ -30,6 +30,17 @@ function isEvenAsyn(value) {
     }, 1500);})
 }
 
+async function awaitTest(data) {
+    try {
+        console.time("Await test time:")
+        const result = await asyncFind(data, isEvenAsyn);
+        console.timeEnd("Await test time:")
+        console.log("Знайдений елемент(async-await):", result);
+    } catch (err) {
+        console.error("Помилка:", err);
+    }
+}
+
 const data1 = [1, 1, 1, 1, 6];
 console.time("Test 1 time");
 asyncFind(data1, isEvenAsyn).then((result) => {
@@ -56,3 +67,6 @@ asyncFind(data3, isEvenAsyn).then((result) => {
     }).catch((err) => {
     console.error("Помилка:", err);
     });
+
+
+awaitTest(data2);
