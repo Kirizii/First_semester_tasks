@@ -1,7 +1,11 @@
-function asyncFind(array, asyncPredicate) {
+function asyncFind(array, asyncPredicate, abortSignal) {
     return new Promise((resolve, reject) => {
         let index = 0;
         const next = () => {
+            if (abortSignal.aborted) {
+                reject(new Error("Операцію було скасовано"));
+                return;
+            }
             if (index >= array.length) {
                 resolve(undefined);
                 return;
