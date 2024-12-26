@@ -26,3 +26,25 @@ function asyncFind(array, asyncPredicate, abortSignal) {
         next();
     });
 }
+
+function isEvenAsyn(value) {
+    return new Promise((resolve) =>{
+        setTimeout(() => {
+            resolve(value % 2 === 0);
+        }, 1000);})
+}
+
+
+const abortControl = new AbortController();
+const signal = abortControl.signal;
+data = [1, 1, 1, 64, 90];
+console.time("Test time")
+asyncFind(data, isEvenAsyn, signal).then((result) => {
+    console.timeEnd("Test time")
+    console.log("Знайдений елемент:", result);
+}).catch((err) => {
+    console.error("Помилка:", err);
+});
+setTimeout(() => {
+    abortControl.abort();
+}, 3000);
