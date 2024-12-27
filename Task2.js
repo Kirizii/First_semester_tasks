@@ -32,43 +32,34 @@ function isEvenAsyn(value) {
     }, 1500);})
 }
 
-async function awaitTest(data) {
+async function awaitTest(testNumber ,data) {
     try {
-        console.time("Await test time:")
+        console.time(`Await test ${testNumber} time`)
         const result = await asyncFind(data, isEvenAsyn);
-        console.timeEnd("Await test time:")
+        console.timeEnd(`Await test ${testNumber} time`)
         console.log("Знайдений елемент(async-await):", result);
     } catch (err) {
         console.error("Помилка:", err);
     }
 }
 
-const data1 = [1, 1, 1, 1, 6];
-console.time("Test 1 time");
-asyncFind(data1, isEvenAsyn).then((result) => {
-    console.timeEnd("Test 1 time")
-    console.log("Знайдений елемент:", result);
-}).catch((err) => {
-    console.error("Помилка:", err);
-});
-
-const data2 = [-1, 5, 7, 4, 1];
-console.time("Test 2 time");
-asyncFind(data2, isEvenAsyn).then((result) => {
-    console.timeEnd("Test 2 time")
-    console.log("Знайдений елемент:", result);
-}).catch((err) => {
-    console.error("Помилка:", err);
-});
-
-const data3 = [1, 1, 1, 64, 90];
-console.time("Test 3 time");
-asyncFind(data3, isEvenAsyn).then((result) => {
-    console.timeEnd("Test 3 time")
-    console.log("Знайдений елемент:", result);
+function test(testNumber ,data){
+    console.time(`Test ${testNumber} time`);
+    asyncFind(data, isEvenAsyn).then((result) => {
+        console.timeEnd(`Test ${testNumber} time`)
+        console.log("Знайдений елемент:", result);
     }).catch((err) => {
-    console.error("Помилка:", err);
-    });
+        console.error("Помилка:", err);
+    });}
 
+const data1 = [1, 1, 1, 1, 6];
+const data2 = [-1, 5, 7, 4, 1];
+const data3 = [1, 1, 1, 64, 90];
 
-awaitTest(data2);
+test(1, data1)
+test(2, data2)
+test(3, data3)
+
+awaitTest(1, data1);
+awaitTest(2, data2);
+awaitTest(3, data3)
