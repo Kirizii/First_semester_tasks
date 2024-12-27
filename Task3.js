@@ -1,3 +1,5 @@
+"use strict"
+
 function asyncFind(array, asyncPredicate, abortSignal) {
     return new Promise((resolve, reject) => {
         let index = 0;
@@ -37,7 +39,7 @@ function isEvenAsyn(value) {
 
 const abortControl = new AbortController();
 const signal = abortControl.signal;
-data = [1, 1, 1, 64, 90];
+const data = [1, 1, 1, 64, 90];
 console.time("Test time")
 asyncFind(data, isEvenAsyn, signal).then((result) => {
     console.timeEnd("Test time")

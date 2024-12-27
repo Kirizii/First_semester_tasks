@@ -1,3 +1,5 @@
+"use strict"
+
 const EventEmitter = require('events');
 
 class User {
@@ -20,7 +22,7 @@ const chatEventEmitter = new EventEmitter();
 
 const kostya = new User('Kostya', chatEventEmitter);
 const maks = new User('Maks', chatEventEmitter);
-const sasha = new User('Shasha', chatEventEmitter);
+const sasha = new User('Sasha', chatEventEmitter);
 
 kostya.sendMessage('Привіт усім');
 maks.sendMessage('Привіт');

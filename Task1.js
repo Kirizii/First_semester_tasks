@@ -1,3 +1,5 @@
+"use strict"
+
 function asyncFind(array, asyncPredicate, callback) {
     let index = 0;
     const next = () => {

@@ -1,3 +1,5 @@
+"use strict"
+
 function asyncFind(array, asyncPredicate) {
     return new Promise((resolve, reject) => {
         let index = 0;
