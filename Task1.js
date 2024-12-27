@@ -1,27 +1,33 @@
 "use strict"
 
-function asyncFind(array, asyncPredicate, callback) {
+function asyncFind(array, asyncPredicate, callback, debounceTime = 1500) {
     let index = 0;
     const next = () => {
         if (index >= array.length) {
             callback(null, undefined);
             return;
         }
+        const startTime = Date.now();
         asyncPredicate(array[index], (err, result) => {
-            if (err) {
-                callback(err, null);
-                return;
-            }
-            if (result) {
-                callback(null, array[index]);
-            } else {
-                index++;
-                next();
-            }
+            const elapsedTime = Date.now() - startTime;
+            const additionalDelay = Math.max(0, debounceTime - elapsedTime);
+            setTimeout(() => {
+                if (err) {
+                    callback(err, null);
+                    return;
+                }
+                if (result) {
+                    callback(null, array[index]);
+                } else {
+                    index++;
+                    next();
+                }
+            }, additionalDelay);
         });
     };
     next();
 }
+
 
 function isEvenAsyn(value, callback) {
     setTimeout(() => {
@@ -42,7 +48,7 @@ function test(testNumber ,data){
         } else {
             console.log("Знайдений елемент:", result);
         }
-    });
+    },1600);
 }
 test(1, data1)
 test(2, data2)
