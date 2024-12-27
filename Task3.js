@@ -36,17 +36,22 @@ function isEvenAsyn(value) {
         }, 1000);})
 }
 
+function test(testNumber,data,abortTimeout){
+    const abortControl = new AbortController();
+    const signal = abortControl.signal;
+    console.time(`Test ${testNumber} time`)
+    asyncFind(data, isEvenAsyn, signal).then((result) => {
+        console.timeEnd(`Test ${testNumber} time`)
+        console.log("Знайдений елемент:", result);
+    }).catch((err) => {
+        console.error("Помилка:", err);
+    });
+    setTimeout(() => {
+        abortControl.abort();
+    }, abortTimeout);
+}
 
-const abortControl = new AbortController();
-const signal = abortControl.signal;
-const data = [1, 1, 1, 64, 90];
-console.time("Test time")
-asyncFind(data, isEvenAsyn, signal).then((result) => {
-    console.timeEnd("Test time")
-    console.log("Знайдений елемент:", result);
-}).catch((err) => {
-    console.error("Помилка:", err);
-});
-setTimeout(() => {
-    abortControl.abort();
-}, 3000);
+const data1 = [1, 1, 64, 90];
+const data2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 64, 90];
+test(1,data1,3000)
+test(2,data2,3000)
